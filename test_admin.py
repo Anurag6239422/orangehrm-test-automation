@@ -14,3 +14,6 @@ def test_admin_validation(browserInstance):
 
     #Test Case 4
     assert ad_min.is_admin_visible()
+
+    #Test Case 5
+    assert ad_min.check_record()
