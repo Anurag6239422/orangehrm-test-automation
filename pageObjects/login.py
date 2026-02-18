@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class LogIn:
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 10)
         self.user_name = (By.XPATH, "//input[@name='username']")
         self.password = (By.XPATH, "//input[@type='password']")
         self.logIn_Button = (By.CLASS_NAME, "oxd-button--medium")
@@ -20,3 +21,6 @@ class LogIn:
         self.driver.find_element(*self.user_name).send_keys("Admin")
         self.driver.find_element(*self.password).send_keys("admin124")
         self.driver.find_element(*self.logIn_Button).click()
+
+    def login_button_display(self):
+        return self.wait.until(EC.presence_of_element_located(self.logIn_Button)).is_displayed()
