@@ -15,10 +15,13 @@ def browserInstance(request):
     browser_name = request.config.getoption("browser_name")
     if browser_name == 'chrome':
         driver = webdriver.Chrome()
-        driver.implicitly_wait(5)
     elif browser_name == 'firefox':
         driver = webdriver.Firefox()
-        driver.implicitly_wait(5)
+        
+    
+    driver.implicitly_wait(15)
+    driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+    driver.maximize_window()
     
     yield driver
 

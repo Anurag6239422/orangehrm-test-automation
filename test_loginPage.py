@@ -1,36 +1,41 @@
-import time
+import json
+import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pageObjects.login import LogIn
 
-#Test Case 1
+test_data_path = 'data/test_loginPageFramework.json'
 
-def test_correctLogin(browserInstance):
+with open(test_data_path) as f:
+    test_data = json.load(f)
+    test_list = test_data["data"]
+#Test Case 1
+@pytest.mark.parametrize("test_list_item", test_list)
+def test_correctLogin(browserInstance, test_list_item):
     driver = browserInstance
-    driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
-    driver.maximize_window()
 
     log = LogIn(driver)
-    log.Correctlogin_data()
 
-    dashboard = WebDriverWait(driver, 10).until(
-        EC.visibility_of_element_located((By.XPATH, "//h6[text()='Dashboard']"))
-    )
+    if test_list_item["type"] == "valid":
+        log.Correctlogin_data(test_list_item["username"], test_list_item["password"])
 
-    assert dashboard.is_displayed()
+        dashboard = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, "//h6[text()='Dashboard']"))
+        )
+
+        assert dashboard.is_displayed()
 
 #Test Case 2
-
-def test_incorrectLogin(browserInstance):
+@pytest.mark.parametrize("test_list_item", test_list)
+def test_incorrectLogin(browserInstance, test_list_item):
     driver = browserInstance
-    driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
-    driver.maximize_window()
     
     log = LogIn(driver)
-    log.Incorrectlogin_data()
+    if test_list_item["type"] == "Invalid":
+        log.Incorrectlogin_data(test_list_item["username"], test_list_item["password"])
 
-    message = driver.find_element(By.CLASS_NAME, "oxd-alert-content-text").text
+        message = driver.find_element(By.CLASS_NAME, "oxd-alert-content-text").text
 
-    assert "Invalid credentials" in message
+        assert "Invalid credentials" in message
 
