@@ -10,6 +10,7 @@ test_data_path = 'data/test_loginPageFramework.json'
 with open(test_data_path) as f:
     test_data = json.load(f)
     test_list = test_data["data"]
+    
 #Test Case 1
 @pytest.mark.parametrize("test_list_item", test_list)
 def test_correctLogin(browserInstance, test_list_item):
