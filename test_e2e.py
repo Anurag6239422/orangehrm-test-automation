@@ -7,7 +7,9 @@ from pageObjects.login import LogIn
 from pageObjects.admin import Admin
 from pageObjects.childWindow import Window
 from pageObjects.logout import LogOut
+import pytest
 
+@pytest.mark.smoke
 def test_end2end(browserInstance):
     driver = browserInstance
 
