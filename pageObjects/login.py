@@ -10,17 +10,17 @@ class LogIn:
         self.password = (By.XPATH, "//input[@type='password']")
         self.logIn_Button = (By.CLASS_NAME, "oxd-button--medium")
         
-    def Correctlogin_data(self):
+    def Correctlogin_data(self, username, password):
         wait = WebDriverWait(self.driver, 15)
 
-        wait.until(EC.visibility_of_element_located(self.user_name)).send_keys("Admin")
-        wait.until(EC.visibility_of_element_located(self.password)).send_keys("admin123")
+        wait.until(EC.visibility_of_element_located(self.user_name)).send_keys(username)
+        wait.until(EC.visibility_of_element_located(self.password)).send_keys(password)
         wait.until(EC.element_to_be_clickable(self.logIn_Button)).click()
     
-    def Incorrectlogin_data(self):
-        self.driver.find_element(*self.user_name).send_keys("Admin")
-        self.driver.find_element(*self.password).send_keys("admin124")
+    def Incorrectlogin_data(self, username, password):
+        self.driver.find_element(*self.user_name).send_keys(username)
+        self.driver.find_element(*self.password).send_keys(password)
         self.driver.find_element(*self.logIn_Button).click()
 
     def login_button_display(self):
-        return self.wait.until(EC.presence_of_element_located(self.logIn_Button)).is_displayed()
+        return self.wait.until(EC.visibility_of_element_located(self.logIn_Button)).is_displayed()

@@ -10,7 +10,6 @@ class LogOut:
         self.logout_button = (By.XPATH, "//a[text()='Logout']")
 
     def logout_click(self):
-        self.wait.until(EC.visibility_of_element_located(self.dropdown_button)).click()
         self.wait.until(EC.element_to_be_clickable(self.dropdown_button)).click()
-
+        self.wait.until(EC.element_to_be_clickable(self.logout_button)).click()
     
